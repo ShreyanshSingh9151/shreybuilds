@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap");
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  body {
+    @apply min-h-screen bg-slate-50 text-ink antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgb(148 163 184 / 0.3);
+    border-radius: 999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(148 163 184 / 0.5);
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-xl border border-slate-200/80 bg-white shadow-card;
+  }
+
+  .card-elevated {
+    @apply rounded-xl border border-slate-200/60 bg-white shadow-elevated;
+  }
+
+  .input-field {
+    @apply w-full rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-ink
+      outline-none transition-all duration-150
+      placeholder:text-slate-400
+      hover:border-slate-300
+      focus:border-accent focus:ring-2 focus:ring-accent/10;
+  }
+
+  .input-field:is(textarea) {
+    @apply resize-y;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-ink px-4 py-2.5
+      text-sm font-medium text-white shadow-sm transition-all duration-150
+      hover:bg-slate-800 active:bg-slate-900
+      disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200
+      bg-white px-4 py-2.5 text-sm font-medium text-ink shadow-sm transition-all duration-150
+      hover:bg-slate-50 active:bg-slate-100
+      disabled:cursor-not-allowed disabled:opacity-50;
+  }
+}

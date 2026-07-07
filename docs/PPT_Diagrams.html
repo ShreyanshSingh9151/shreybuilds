@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MailPilot AI - PPT Diagrams</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        .slide {
+            background: white;
+            border-radius: 8px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .slide-title {
+            color: #1a365d;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #3182ce;
+        }
+        .diagram-container {
+            background: #fafafa;
+            padding: 30px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .key-points {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .key-point {
+            background: linear-gradient(135deg, #ebf8ff 0%, #e6fffa 100%);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #3182ce;
+        }
+        .key-point h4 {
+            color: #2c5282;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        .key-point ul {
+            margin-left: 20px;
+            color: #4a5568;
+            font-size: 14px;
+        }
+        .key-point li {
+            margin-bottom: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border: 1px solid #e2e8f0;
+        }
+        th {
+            background: #2c5282;
+            color: white;
+            font-weight: 600;
+        }
+        tr:nth-child(even) {
+            background: #f7fafc;
+        }
+        .architecture-box {
+            border: 2px solid #3182ce;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 15px 0;
+            background: linear-gradient(135deg, #fff 0%, #f0f9ff 100%);
+        }
+        .architecture-box h3 {
+            color: #1a365d;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        .layer {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+        .layer-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 24px;
+        }
+        .layer-content h4 {
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+        .layer-content p {
+            color: #718096;
+            font-size: 14px;
+        }
+        .gmail { background: #ea4335; color: white; }
+        .extension { background: #4285f4; color: white; }
+        .backend { background: #00add8; color: white; }
+        .llm { background: #10b981; color: white; }
+        .dashboard { background: #8b5cf6; color: white; }
+
+        .flow-diagram {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .flow-step {
+            display: flex;
+            align-items: flex-start;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #3182ce;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .step-number {
+            background: #3182ce;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        .step-content h4 {
+            color: #1a365d;
+            margin-bottom: 8px;
+        }
+        .step-content code {
+            background: #f1f5f9;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
+            font-size: 13px;
+            color: #e53e3e;
+        }
+        .step-content p {
+            color: #4a5568;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .arrow-down {
+            text-align: center;
+            color: #3182ce;
+            font-size: 24px;
+            margin: 5px 0;
+        }
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .tech-item {
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            border: 2px solid #e2e8f0;
+        }
+        .tech-item:hover {
+            border-color: #3182ce;
+            transform: translateY(-2px);
+        }
+        .tech-item .icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        .tech-item h5 {
+            color: #1a365d;
+            margin-bottom: 5px;
+        }
+        .tech-item p {
+            color: #718096;
+            font-size: 12px;
+        }
+        .print-break {
+            page-break-after: always;
+        }
+        @media print {
+            .slide {
+                box-shadow: none;
+                border: 1px solid #ccc;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <h2 class="slide-title">4. Proposed Model - System Architecture</h2>
+
+        <div class="architecture-box">
+            <div class="layer">
+                <div class="layer-icon gmail">📧</div>
+                <div class="layer-content">
+                    <h4>Gmail Web Interface</h4>
+                    <p>User's email inbox at mail.google.com - source of email threads</p>
+                </div>
+            </div>
+
+            <div style="text-align: center; color: #3182ce; font-size: 20px;">▼ DOM Parsing</div>
+
+            <div class="layer">
+                <div class="layer-icon extension">🧩</div>
+                <div class="layer-content">
+                    <h4>Chrome Extension Layer (Manifest V3)</h4>
+                    <p><strong>content.js:</strong> Extracts thread data (subject, sender, body up to 12KB)<br>
+                    <strong>background.js:</strong> Service worker proxies API requests<br>
+                    <strong>UI Panel:</strong> Floating interface with action buttons & result display</p>
+                </div>
+            </div>
+
+            <div style="text-align: center; color: #3182ce; font-size: 20px;">▼ HTTP POST (JSON)</div>
+
+            <div class="layer">
+                <div class="layer-icon backend">⚙️</div>
+                <div class="layer-content">
+                    <h4>Backend</h4>
+                    <p><strong>Handlers:</strong> EmailAI, Dashboard, Memory, Inbox<br>
+                    <strong>Services:</strong> AI orchestration, Analytics, Preferences<br>
+                    <strong>Stores:</strong> ActionStore, MemoryStore, InboxStore (in-memory)</p>
+                </div>
+            </div>
+
+            <div style="text-align: center; color: #3182ce; font-size: 20px;">▼ Model Routing</div>
+
+            <div class="layer">
+                <div class="layer-icon llm">🤖</div>
+                <div class="layer-content">
+                    <h4>Multi-LLM Provider Layer</h4>
+                    <p><strong>GPT-4:</strong> Reply generation, tone rewriting ($0.03/1K tokens)<br>
+                    <strong>Claude 3.5:</strong> Summarization, comprehension ($0.015/1K tokens)<br>
+                    <strong>Gemini Pro:</strong> Classification, fast tasks ($0.001/1K tokens)</p>
+                </div>
+            </div>
+
+            <div style="text-align: center; color: #3182ce; font-size: 20px;">▼ Analytics Data</div>
+
+            <div class="layer">
+                <div class="layer-icon dashboard">📊</div>
+                <div class="layer-content">
+                    <h4>Dashboard</h4>
+                    <p><strong>Statistics:</strong> Connected inboxes, AI actions, token usage, costs<br>
+                    <strong>Visualizations:</strong> Model usage, cost breakdown, latency trends<br>
+                    <strong>Preferences:</strong> User settings, tone configuration, signatures</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="key-points">
+            <div class="key-point">
+                <h4>🔄 Intelligent Model Routing</h4>
+                <ul>
+                    <li>Auto-selects optimal LLM based on task type</li>
+                    <li>Summarize → Claude (best comprehension)</li>
+                    <li>Reply/Rewrite → GPT-4 (natural generation)</li>
+                    <li>Classify → Gemini (fast, cost-effective)</li>
+                </ul>
+            </div>
+            <div class="key-point">
+                <h4>📈 Real-time Analytics</h4>
+                <ul>
+                    <li>Track every AI action with metrics</li>
+                    <li>Token usage and cost estimation</li>
+                    <li>Response latency monitoring</li>
+                    <li>Model performance comparison</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide print-break">
+        <h2 class="slide-title">4. Proposed Model - Technology Stack</h2>
+
+        <div class="tech-stack">
+            <div class="tech-item">
+                <div class="icon">🌐</div>
+                <h5>Chrome Extension</h5>
+                <p>Manifest V3<br>JavaScript<br>Gmail DOM Parsing</p>
+            </div>
+            <div class="tech-item">
+                <div class="icon">⚡</div>
+                <h5>Go Backend</h5>
+                <p>Go 1.22+<br>Chi Router<br>RESTful API</p>
+            </div>
+            <div class="tech-item">
+                <div class="icon">⚛️</div>
+                <h5>Next.js Frontend</h5>
+                <p>React 18<br>Tailwind CSS<br>Recharts</p>
+            </div>
+            <div class="tech-item">
+                <div class="icon">🧠</div>
+                <h5>LLM Providers</h5>
+                <p>OpenAI GPT-4<br>Anthropic Claude<br>Google Gemini</p>
+            </div>
+        </div>
+
+        <table>
+            <tr>
+                <th>Component</th>
+                <th>Technology Choice</th>
+                <th>Justification</th>
+            </tr>
+            <tr>
+                <td>Backend Language</td>
+                <td>Go</td>
+                <td>High performance, simple deployment, excellent concurrency</td>
+            </tr>
+            <tr>
+                <td>API Framework</td>
+                <td>Chi Router</td>
+                <td>Lightweight, idiomatic Go, middleware support</td>
+            </tr>
+            <tr>
+                <td>Extension Platform</td>
+                <td>Chrome MV3</td>
+                <td>3B+ users, direct Gmail integration, secure service workers</td>
+            </tr>
+            <tr>
+                <td>Frontend Framework</td>
+                <td>Next.js 15</td>
+                <td>React ecosystem, App Router, optimal developer experience</td>
+            </tr>
+            <tr>
+                <td>LLM Strategy</td>
+                <td>Multi-Provider</td>
+                <td>No vendor lock-in, cost optimization, task-specific routing</td>
+            </tr>
+        </table>
+
+        <div class="key-points">
+            <div class="key-point">
+                <h4>🚀 Why Go over Spring Boot?</h4>
+                <ul>
+                    <li>Single binary deployment (no JVM)</li>
+                    <li>Lower memory footprint (~10MB vs ~200MB)</li>
+                    <li>Faster cold start times</li>
+                    <li>Built-in concurrency with goroutines</li>
+                </ul>
+            </div>
+            <div class="key-point">
+                <h4>🔌 Why Extension over SMTP?</h4>
+                <ul>
+                    <li>Real-time Gmail integration</li>
+                    <li>No email sending required</li>
+                    <li>In-context AI assistance</li>
+                    <li>Zero configuration for users</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide print-break">
+        <h2 class="slide-title">5. Methodology - AI Action Processing Flow</h2>
+
+        <div class="flow-diagram">
+            <div class="flow-step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h4>Content Extraction</h4>
+                    <code>content.js → extractVisibleThread()</code>
+                    <p>Parses Gmail DOM to extract subject, sender, and body content (max 12KB)</p>
+                </div>
+            </div>
+            <div class="arrow-down">▼</div>
+
+            <div class="flow-step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h4>API Request Proxy</h4>
+                    <code>background.js → chrome.runtime.sendMessage()</code>
+                    <p>Service worker handles cross-origin request to backend API</p>
+                </div>
+            </div>
+            <div class="arrow-down">▼</div>
+
+            <div class="flow-step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h4>Request Validation</h4>
+                    <code>handlers/email_ai.go → validateAIRequest()</code>
+                    <p>Validates provider (gmail/outlook), checks content is non-empty</p>
+                </div>
+            </div>
+            <div class="arrow-down">▼</div>
+
+            <div class="flow-step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h4>Model Routing</h4>
+                    <code>services/model_router.go → Resolve()</code>
+                    <p>If "auto" mode: routes summarize→Claude, reply→GPT, classify→Gemini</p>
+                </div>
+            </div>
+            <div class="arrow-down">▼</div>
+
+            <div class="flow-step">
+                <div class="step-number">5</div>
+                <div class="step-content">
+                    <h4>LLM API Call</h4>
+                    <code>providers/*.go → Summarize() / Reply() / Classify()</code>
+                    <p>Constructs prompt, calls selected LLM API, receives generated text</p>
+                </div>
+            </div>
+            <div class="arrow-down">▼</div>
+
+            <div class="flow-step">
+                <div class="step-number">6</div>
+                <div class="step-content">
+                    <h4>Response Processing</h4>
+                    <code>services/email_ai.go → recordAction()</code>
+                    <p>Calculates tokens (~4 chars/token), estimates cost, measures latency, stores action</p>
+                </div>
+            </div>
+            <div class="arrow-down">▼</div>
+
+            <div class="flow-step">
+                <div class="step-number">7</div>
+                <div class="step-content">
+                    <h4>UI Render</h4>
+                    <code>content.js → renderResult()</code>
+                    <p>Displays summary, output text, classification, priority, model used, cost & latency</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <h2 class="slide-title">5. Methodology - Algorithm Details</h2>
+
+        <div class="key-points" style="grid-template-columns: 1fr;">
+            <div class="key-point">
+                <h4>🔍 Gmail DOM Extraction Strategy</h4>
+                <pre style="background: #1e293b; color: #e2e8f0; padding: 15px; border-radius: 6px; overflow-x: auto; font-size: 13px; margin-top: 10px;">
+// Multi-fallback selector approach for Gmail's dynamic DOM
+const SELECTORS = {
+    subject: ['h2[data-thread-perm-id]', 'h2.hP', 'div[role="main"] h2'],
+    sender:  ['span[email].gD', 'h3 span[email]', 'span[email]'],
+    body:    ['div.a3s.aiL', 'div.a3s', 'div[role="listitem"] div.a3s']
+};
+
+function extractVisibleThread() {
+    const subject = trySelectors(SELECTORS.subject)?.textContent || 'No Subject';
+    const sender = trySelectors(SELECTORS.sender)?.getAttribute('email') || 'Unknown';
+    const bodies = document.querySelectorAll(SELECTORS.body[0]);
+    const content = Array.from(bodies)
+        .filter(el => isVisible(el))
+        .map(el => el.innerText.trim())
+        .join('\n\n-----\n\n')
+        .substring(0, 12000);  // 12KB limit
+    return { subject, sender, content };
+}</pre>
+            </div>
+        </div>
+
+        <table style="margin-top: 30px;">
+            <tr>
+                <th>Algorithm Characteristic</th>
+                <th>Implementation</th>
+                <th>Benefit</th>
+            </tr>
+            <tr>
+                <td>Stateless Processing</td>
+                <td>Each request independent, no session state</td>
+                <td>Horizontal scaling, no state sync</td>
+            </tr>
+            <tr>
+                <td>Provider Abstraction</td>
+                <td>LLMProvider interface with Summarize(), Reply(), etc.</td>
+                <td>Swap models without code changes</td>
+            </tr>
+            <tr>
+                <td>Graceful Fallback</td>
+                <td>Mock providers when API keys unavailable</td>
+                <td>Always functional demo mode</td>
+            </tr>
+            <tr>
+                <td>Cost Optimization</td>
+                <td>Auto-route to cheapest effective model</td>
+                <td>Gemini for classify = $0.001 vs $0.03</td>
+            </tr>
+        </table>
+
+        <div class="key-points" style="margin-top: 30px;">
+            <div class="key-point">
+                <h4>📊 Cost Estimation Formula</h4>
+                <pre style="background: #1e293b; color: #e2e8f0; padding: 10px; border-radius: 6px; font-size: 12px;">
+tokens = (len(input) + len(output)) / 4
+cost = tokens / 1000 * rate[model]
+
+Rates: GPT=$0.030, Claude=$0.015, Gemini=$0.001</pre>
+            </div>
+            <div class="key-point">
+                <h4>🚀 Model Routing Decision</h4>
+                <pre style="background: #1e293b; color: #e2e8f0; padding: 10px; border-radius: 6px; font-size: 12px;">
+if selected == "auto":
+    summarize → claude  (comprehension)
+    reply     → gpt     (natural tone)
+    classify  → gemini  (fast, cheap)
+    rewrite   → gpt     (style control)</pre>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <h2 class="slide-title">API Endpoints Reference</h2>
+
+        <table>
+            <tr>
+                <th>Endpoint</th>
+                <th>Method</th>
+                <th>Purpose</th>
+                <th>Used By</th>
+            </tr>
+            <tr>
+                <td><code>/api/v1/threads/summarize</code></td>
+                <td>POST</td>
+                <td>Summarize email thread</td>
+                <td>Extension</td>
+            </tr>
+            <tr>
+                <td><code>/api/v1/threads/reply</code></td>
+                <td>POST</td>
+                <td>Generate reply draft</td>
+                <td>Extension</td>
+            </tr>
+            <tr>
+                <td><code>/api/v1/threads/rewrite</code></td>
+                <td>POST</td>
+                <td>Rewrite with different tone</td>
+                <td>Extension</td>
+            </tr>
+            <tr>
+                <td><code>/api/v1/threads/classify</code></td>
+                <td>POST</td>
+                <td>Classify email category</td>
+                <td>Extension</td>
+            </tr>
+            <tr>
+                <td><code>/api/v1/dashboard/summary</code></td>
+                <td>GET</td>
+                <td>Dashboard statistics</td>
+                <td>Dashboard</td>
+            </tr>
+            <tr>
+                <td><code>/api/v1/dashboard/actions</code></td>
+                <td>GET</td>
+                <td>Recent AI actions</td>
+                <td>Dashboard</td>
+            </tr>
+            <tr>
+                <td><code>/api/v1/memory/preferences</code></td>
+                <td>POST</td>
+                <td>Update user preferences</td>
+                <td>Both</td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+    </script>
+</body>
+</html>
